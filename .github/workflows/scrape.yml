@@ -2,7 +2,7 @@ name: Scrape ToyotaPartsDeal
 
 on:
   schedule:
-    - cron: '*/15 * * * *'   # كل 15 دقيقة — يحتاج المستودع يكون Public عشان يبقى مجاني بالكامل
+    - cron: '*/10 * * * *'   # كل 15 دقيقة — يحتاج المستودع يكون Public عشان يبقى مجاني بالكامل
   workflow_dispatch: {}       # يسمح بتشغيل يدوي من تبويب Actions بالمستودع
 
 jobs:
