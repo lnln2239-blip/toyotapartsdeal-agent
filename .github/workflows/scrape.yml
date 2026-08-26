@@ -1,0 +1,33 @@
+name: Scrape ToyotaPartsDeal
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'   # كل 15 دقيقة — يحتاج المستودع يكون Public عشان يبقى مجاني بالكامل
+  workflow_dispatch: {}       # يسمح بتشغيل يدوي من تبويب Actions بالمستودع
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false   # لو عامل وحد فشل، الباقي يكملون عادي
+      matrix:
+        worker: [1, 2, 3, 4, 5, 6, 7, 8]   # عدد العمّال المتوازيين — زدها أو قللها حسب حاجتك
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: تثبيت الحزم
+        run: npm install
+
+      - name: تشغيل سكربت السحب (عامل ${{ matrix.worker }})
+        run: node scripts/scrape-category.mjs
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          DELAY_MS: '3000'
+          MAX_RUNTIME_MS: '480000'
+          MAX_CATEGORIES_PER_RUN: '3'
