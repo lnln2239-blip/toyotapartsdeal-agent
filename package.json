@@ -1,0 +1,14 @@
+{
+  "name": "toyotapartsdeal-agent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "discover": "node scripts/discover-categories.mjs",
+    "scrape": "node scripts/scrape-category.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "cheerio": "^1.0.0"
+  }
+}
